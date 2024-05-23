@@ -3,36 +3,42 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="main-container">
+<div class="main-container centered-container">
+    <div class="box">
+        <h2>Home</h2>
+    </div>
+
     <div class="two-column-layout">
         <div class="left-column">
-            <h2>Home</h2>
+            <div class="box">
+                <h3>Create a League</h3>
+                <form method="post">
+                    {% csrf_token %}
+                    <label for="league_name">League Name:</label>
+                    <input type="text" name="league_name" id="league_name">
+                    <button type="submit" name="create_league">Create League</button>
+                </form>
+            </div>
 
-            <h3>Create a League</h3>
-            <form method="post">
-                {% csrf_token %}
-                <label for="league_name">League Name:</label>
-                <input type="text" name="league_name" id="league_name">
-                <button type="submit" name="create_league">Create League</button>
-            </form>
-
-            <h3>Create a Team</h3>
-            <form method="post">
-                {% csrf_token %}
-                <label for="team_name">Team Name:</label>
-                <input type="text" name="team_name" id="team_name">
-                <label for="league_id">Select League:</label>
-                <select name="league_id" id="league_id">
-                    {% for league in open_leagues %}
-                    <option value="{{ league.id }}">{{ league.name }}</option>
-                    {% endfor %}
-                </select>
-                <button type="submit" name="create_team">Create Team</button>
-            </form>
+            <div class="box">
+                <h3>Create a Team</h3>
+                <form method="post">
+                    {% csrf_token %}
+                    <label for="team_name">Team Name:</label>
+                    <input type="text" name="team_name" id="team_name">
+                    <label for="league_id">Select League:</label>
+                    <select name="league_id" id="league_id">
+                        {% for league in open_leagues %}
+                        <option value="{{ league.id }}">{{ league.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" name="create_team">Create Team</button>
+                </form>
+            </div>
         </div>
 
         <div class="right-column">
-            <div class="list-container">
+            <div class="box">
                 <h3>Your Leagues</h3>
                 <ul>
                     {% for league in user_leagues %}
@@ -41,7 +47,7 @@
                 </ul>
             </div>
 
-            <div class="list-container">
+            <div class="box">
                 <h3>Open Leagues</h3>
                 <ul>
                     {% for league in open_leagues %}

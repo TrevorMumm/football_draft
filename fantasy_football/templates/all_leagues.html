@@ -3,13 +3,21 @@
 {% block title %}All Leagues{% endblock %}
 
 {% block content %}
-    <div class="main-container">
-        <h2>All Leagues</h2>
+<div class="main-container centered-container">
+    <div class="box">
+        <h2>Leagues</h2>
+    </div>
 
+    <div class="box list-container">
+        {% if leagues %}
         <ul>
             {% for league in leagues %}
-                <li><a href="{% url 'league_detail' league.id %}">{{ league.name }}</a></li>
+            <li><a href="{% url 'league_detail' league.id %}">{{ league.name }}</a></li>
             {% endfor %}
         </ul>
+        {% else %}
+        <p>No leagues available.</p>
+        {% endif %}
     </div>
+</div>
 {% endblock %}

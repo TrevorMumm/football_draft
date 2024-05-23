@@ -9,6 +9,68 @@ from django import forms
 from openpyxl import load_workbook
 from datetime import datetime, timedelta
 
+@login_required
+def my_team(request):
+    user = request.user
+    team = Team.objects.filter(owner=user).first()
+    leagues = League.objects.all()
+
+    if request.method == 'POST':
+        if 'rename_team' in request.POST:
+            team_name = request.POST.get('team_name')
+            if team_name:
+                team.name = team_name
+                team.save()
+                messages.success(request, 'Team renamed successfully.')
+        
+        elif 'enter_league' in request.POST:
+            league_id = request.POST.get('league_id')
+            league = get_object_or_404(League, id=league_id)
+            team.leagues.add(league)
+            messages.success(request, 'Team entered into league successfully.')
+
+        elif 'delete_team' in request.POST:
+            team.delete()
+            messages.success(request, 'Team deleted successfully.')
+            return redirect('home')
+        
+        elif 'create_team' in request.POST:
+            new_team_name = request.POST.get('new_team_name')
+            if new_team_name:
+                new_team = Team.objects.create(name=new_team_name, owner=user)
+                messages.success(request, 'New team created successfully.')
+                return redirect('my_team')
+
+    context = {
+        'team': team,
+        'leagues': leagues,
+    }
+    return render(request, 'my_team.html', context)
+
+@login_required
+def assign_players(request):
+    user = request.user
+    team = Team.objects.filter(owner=user).first()
+    players = Player.objects.all()
+
+    if request.method == 'POST':
+        form = AssignPlayerForm(request.POST)
+        if form.is_valid():
+            player_id = form.cleaned_data['player']
+            player = get_object_or_404(Player, id=player_id)
+            team.players.add(player)
+            messages.success(request, f'Player {player.name} assigned to your team.')
+            return redirect('assign_players')
+    else:
+        form = AssignPlayerForm()
+
+    context = {
+        'team': team,
+        'players': players,
+        'form': form,
+    }
+    return render(request, 'assign_players.html', context)
+
 class TeamCreationForm(forms.ModelForm):
     class Meta:
         model = Team
@@ -25,40 +87,32 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
 
+@login_required
 def home(request):
-    login_form = AuthenticationForm()
-    register_form = UserCreationForm()
+    user = request.user
+    teams = Team.objects.filter(owner=user)
+    leagues = League.objects.filter(team__owner=user).distinct()  # Fetch leagues through teams
 
     if request.method == 'POST':
-        if 'login' in request.POST:
-            login_form = AuthenticationForm(data=request.POST)
-            if login_form.is_valid():
-                user = login_form.get_user()
-                login(request, user)
+        if 'create_team' in request.POST:
+            form = TeamCreationForm(request.POST)
+            if form.is_valid():
+                team = form.save(commit=False)
+                team.owner = user
+                team.save()
+                messages.success(request, 'New team created successfully.')
                 return redirect('home')
-        elif 'register' in request.POST:
-            register_form = UserCreationForm(request.POST)
-            if register_form.is_valid():
-                user = register_form.save()
-                login(request, user)
-                return redirect('home')
-        elif 'create_league' in request.POST:
-            if not request.user.is_superuser:
-                messages.error(request, 'Only administrators can use this function.')
-                return redirect('home')
-            league_name = request.POST.get('league_name')
-            if league_name:
-                league = League.objects.create(name=league_name)
-                league.members.add(request.user)
-                return redirect('league_detail', league_id=league.id)
-        elif 'create_team' in request.POST:
-            team_name = request.POST.get('team_name')
-            league_id = request.POST.get('league_id')
-            league = get_object_or_404(League, id=league_id)
-            if team_name and request.user in league.members.all():
-                team = Team.objects.create(name=team_name, owner=request.user)
-                team.leagues.set([league])  # Use set() method to assign the league
-                return redirect('home')
+        else:
+            form = TeamCreationForm()
+    else:
+        form = TeamCreationForm()
+
+    context = {
+        'form': form,
+        'teams': teams,
+        'leagues': leagues,
+    }
+    return render(request, 'home.html', context)
 
     context = {
         'login_form': login_form,

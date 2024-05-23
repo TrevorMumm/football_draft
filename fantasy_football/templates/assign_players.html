@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Assign Players{% endblock %}
+
+{% block content %}
+<div class="main-container centered-container">
+    <div class="box">
+        <h2>Assign Players to {{ team.name }}</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Assign Player</button>
+        </form>
+        <div>
+            <h3>Current Team</h3>
+            <ul>
+                {% for player in team.players.all %}
+                <li>{{ player.name }} - {{ player.position }} ({{ player.team }})</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

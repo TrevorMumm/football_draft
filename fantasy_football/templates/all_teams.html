@@ -3,25 +3,38 @@
 {% block title %}All Teams{% endblock %}
 
 {% block content %}
-    <div class="main-container">
-        <h2>Teams</h2>
-        
-        <h3>Create a New Team</h3>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Create Team</button>
-        </form>
-
-        <h3>Existing Teams</h3>
-        <ul>
-            {% for team in teams %}
-                <li>Team: {{ team.name }} | Owner: {{ team.owner.username }} | League(s): 
-                    {% for league in team.leagues.all %}
-                        {{ league.name }}{% if not forloop.last %}, {% endif %}
-                    {% endfor %}
-                </li>
-            {% endfor %}
-        </ul>
+<div class="main-container centered-container">
+    <div class="box">
+        <h2>All Teams</h2>
     </div>
+
+    <div class="two-column-layout">
+        <div class="left-column">
+            <div class="box">
+                <h3>Create a New Team</h3>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Create Team</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="right-column">
+            <div class="box list-container">
+                <h3>Existing Teams</h3>
+                {% if teams %}
+                <ul>
+                    {% for team in teams %}
+                    <li>{{ team.owner.username }}: {{ team.name }}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>No teams available.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
