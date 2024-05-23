@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}All Teams{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <div class="two-column-layout">
+        <div class="left-column">
+            <h2>All Teams</h2>
+
+            <h3>Create a New Team</h3>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Create Team</button>
+            </form>
+        </div>
+
+        <div class="right-column">
+            <div class="list-container">
+                <h3>Existing Teams</h3>
+                <ul>
+                    {% for team in teams %}
+                    <li>Team: {{ team.name }} | Owner: {{ team.owner.username }} | League(s): 
+                        {% for league in team.leagues.all %}
+                        {{ league.name }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
