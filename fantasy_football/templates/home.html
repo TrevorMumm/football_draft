@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <div class="two-column-layout">
+        <div class="left-column">
+            <h2>Home</h2>
+
+            <h3>Create a League</h3>
+            <form method="post">
+                {% csrf_token %}
+                <label for="league_name">League Name:</label>
+                <input type="text" name="league_name" id="league_name">
+                <button type="submit" name="create_league">Create League</button>
+            </form>
+
+            <h3>Create a Team</h3>
+            <form method="post">
+                {% csrf_token %}
+                <label for="team_name">Team Name:</label>
+                <input type="text" name="team_name" id="team_name">
+                <label for="league_id">Select League:</label>
+                <select name="league_id" id="league_id">
+                    {% for league in open_leagues %}
+                    <option value="{{ league.id }}">{{ league.name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" name="create_team">Create Team</button>
+            </form>
+        </div>
+
+        <div class="right-column">
+            <div class="list-container">
+                <h3>Your Leagues</h3>
+                <ul>
+                    {% for league in user_leagues %}
+                    <li><a href="{% url 'league_detail' league.id %}">{{ league.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="list-container">
+                <h3>Open Leagues</h3>
+                <ul>
+                    {% for league in open_leagues %}
+                    <li><a href="{% url 'league_detail' league.id %}">{{ league.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

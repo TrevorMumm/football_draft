@@ -1,0 +1,165 @@
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1e1e1e; /* Dark background color */
+    color: #e0e0e0; /* Light text color */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header, nav, footer {
+    background-color: #333; /* Dark header, nav, and footer color */
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: center;
+}
+
+.nav-container a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+}
+
+.nav-container a:hover {
+    text-decoration: underline;
+}
+
+/* Main container */
+.main-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.content-wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px 0;
+    padding: 20px;
+    background: #2e2e2e; /* Dark content background */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* New styles for the two-column layout */
+.two-column-layout {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.left-column, .right-column {
+    flex: 1;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.left-column {
+    margin-right: 20px;
+}
+
+.right-column {
+    margin-left: 20px;
+}
+
+.right-column h3, .left-column h3 {
+    margin-bottom: 10px; /* Add some space below the headers */
+    text-align: center;
+}
+
+.right-column ul, .left-column ul {
+    margin-top: 0; /* Ensure no additional margin on top of the list */
+    padding-left: 0; /* Remove default padding */
+    list-style: none;
+}
+
+.right-column ul li, .left-column ul li {
+    margin-bottom: 10px; /* Add space between list items */
+    text-align: center;
+}
+
+h2, h3, h4 {
+    color: #e0e0e0; /* Light heading color */
+    text-align: center; /* Center the headings */
+    margin-top: 0;
+}
+
+h2 {
+    margin-top: 10px; /* Adjust margin to move it closer to the navbar */
+    margin-bottom: 20px; /* Ensure there's some space below the heading */
+}
+
+form {
+    margin-top: 20px;
+    margin-bottom: 40px; /* Add more space below the form */
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input[type="text"], select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #555; /* Dark border color */
+    border-radius: 4px;
+    background-color: #3e3e3e; /* Dark input background */
+    color: #e0e0e0; /* Light input text color */
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #555; /* Dark button color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #777; /* Lighter button color on hover */
+}
+
+/* Bracket styling */
+.bracket {
+    margin-top: 20px;
+}
+
+.bracket ul {
+    padding-left: 20px;
+}
+
+.messages {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.alert {
+    padding: 15px;
+    background-color: #f44336;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.alert-success {
+    background-color: #4CAF50;
+}

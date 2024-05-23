@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create League</title>
+</head>
+<body>
+    <h2>Create a New League</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="league_name">League Name:</label>
+        <input type="text" id="league_name" name="league_name" required>
+        <button type="submit">Create League</button>
+    </form>
+</body>
+</html>

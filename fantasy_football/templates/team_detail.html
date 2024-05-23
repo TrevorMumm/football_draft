@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Team Detail</title>
+</head>
+<body>
+    <h2>{{ team.name }}</h2>
+    <h3>Players</h3>
+    <ul>
+        {% for player in team.players.all %}
+            <li>{{ player.name }} - {{ player.team }} - Bye Week: {{ player.bye_week }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

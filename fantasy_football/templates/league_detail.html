@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}League Detail{% endblock %}
+
+{% block content %}
+    <div class="main-content">
+        <h2>{{ league.name }}</h2>
+        <div class="two-column-layout">
+            <div class="left-column">
+                <h3>Teams</h3>
+                <ul>
+                    {% for team in teams %}
+                        <li>Team: {{ team.name }} | Owner: {{ team.owner.username }}</li>
+                    {% endfor %}
+                </ul>
+
+                <h3>Members</h3>
+                <ul>
+                    {% for member, teams in members_teams.items %}
+                        <li>{{ member.username }}
+                            <ul>
+                                {% for team in teams %}
+                                    <li>{{ team.name }}</li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="right-column">
+                <h3>League Bracket</h3>
+                <div class="bracket">
+                    {% for week in bracket %}
+                        <h4>Week {{ forloop.counter }}</h4>
+                        <ul>
+                            {% for matchup in week %}
+                                <li>{{ matchup.0.username }} vs {{ matchup.1.username }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
