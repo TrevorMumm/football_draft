@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Player List{% endblock %}
+
+{% block content %}
+<div class="main-container centered-container">
+    <div class="box">
+        <h2>Player List by Rank</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Team</th>
+                    <th>Position</th>
+                    <th>Bye Week</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for player in players %}
+                <tr>
+                    <td>{{ player.rank }}</td>
+                    <td>{{ player.name }}</td>
+                    <td>{{ player.team }}</td>
+                    <td>{{ player.position }}</td>
+                    <td>{{ player.bye_week }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

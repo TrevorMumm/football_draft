@@ -13,7 +13,7 @@
                     {% if teams %}
                     <ul>
                         {% for team in teams %}
-                        <li>Team: {{ team.name }} | Member: {{ team.owner.username }}</li>
+                        <li>{{ team.owner.username }}: {{ team.name }}</li>
                         {% endfor %}
                     </ul>
                     {% else %}

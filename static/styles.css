@@ -1,3 +1,5 @@
+/* styles.css */
+
 /* Global styles */
 body {
     font-family: Arial, sans-serif;
@@ -20,30 +22,15 @@ header, nav, footer {
 .nav-container {
     display: flex;
     justify-content: center;
-    align-items: center; /* Ensure items are vertically centered */
 }
 
-.nav-container a, .nav-container button {
+.nav-container a {
     color: white;
     text-decoration: none;
     margin: 0 15px;
-    background: none;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-    display: inline-flex; /* Ensure the button behaves like a link */
-    align-items: center; /* Vertically center the button text */
 }
 
-.nav-container form {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center; /* Vertically align form with other nav items */
-}
-
-.nav-container a:hover, .nav-container button:hover {
+.nav-container a:hover {
     text-decoration: underline;
 }
 
@@ -52,39 +39,89 @@ header, nav, footer {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
 }
 
-.centered-container {
-    padding-top: 10px; /* Reduced padding to move content up */
+.content-wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px 0;
+    padding: 20px;
+    background: #2e2e2e; /* Dark content background */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Box class for content */
 .box {
     width: 100%;
     max-width: 600px;
-    margin-bottom: 20px;
+    margin: 20px; /* Add margin to ensure spacing between boxes */
     padding: 20px;
     background: #2e2e2e; /* Dark content background */
     border: 1px solid #555; /* Border color */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    text-align: center;
+}
+
+/* New styles for the two-column layout */
+.two-column-layout {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px; /* Add gap between the columns */
+    flex-wrap: wrap; /* Allow columns to wrap if needed */
+}
+
+.left-column, .right-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Add gap between the boxes within each column */
+}
+
+.left-column {
+    margin-right: 20px;
+}
+
+.right-column {
+    margin-left: 20px;
+}
+
+.right-column h3, .left-column h3 {
+    margin-bottom: 10px; /* Add some space below the headers */
+    text-align: center;
+}
+
+.right-column ul, .left-column ul {
+    margin-top: 0; /* Ensure no additional margin on top of the list */
+    padding-left: 0; /* Remove default padding */
+    list-style: none; /* Remove bullet points */
+}
+
+.right-column ul li, .left-column ul li {
+    margin-bottom: 10px; /* Add space between list items */
     text-align: center;
 }
 
 h2, h3, h4 {
     color: #e0e0e0; /* Light heading color */
+    text-align: center; /* Center the headings */
     margin-top: 0;
 }
 
 h2 {
+    margin-top: 10px; /* Adjust margin to move it closer to the navbar */
     margin-bottom: 20px; /* Ensure there's some space below the heading */
 }
 
 form {
     margin-top: 20px;
+    margin-bottom: 40px; /* Add more space below the form */
     text-align: center;
 }
 
@@ -117,70 +154,7 @@ button:hover {
     background-color: #777; /* Lighter button color on hover */
 }
 
-/* Styles for the two-column layout */
-.two-column-layout {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1200px;
-}
-
-.left-column, .right-column {
-    flex: 1;
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-}
-
-.left-column {
-    margin-right: 40px; /* Increase margin between columns */
-}
-
-.right-column {
-    margin-left: 40px; /* Increase margin between columns */
-}
-
-.list-container h3 {
-    text-align: center;
-    margin-top: 0; /* Remove top margin */
-}
-
-.list-container ul {
-    padding-left: 0;
-    list-style-type: none; /* Remove bullet points */
-    text-align: center;
-}
-
-.list-container ul li {
-    margin-bottom: 10px;
-}
-
-/* Specific styles for the teams and members list */
-.teams-members-list {
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-.list-header, .list-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-}
-
-.list-header {
-    font-weight: bold;
-    border-bottom: 1px solid #555;
-}
-
-.list-column {
-    flex: 1;
-    text-align: left;
-}
-
-.list-column:nth-child(2) {
-    text-align: right;
-}
-
+/* Bracket styling */
 .bracket {
     margin-top: 20px;
 }
@@ -204,4 +178,14 @@ button:hover {
 
 .alert-success {
     background-color: #4CAF50;
+}
+
+/* No-bullets class for ul */
+ul.no-bullets {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul.no-bullets li {
+    padding: 5px 0; /* Optional: add some padding for better spacing */
 }

@@ -5,9 +5,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from .models import League, Team, Player, Auction
 from .utils import generate_bracket
+from .forms import TeamForm, UploadFileForm, AssignPlayerForm
 from django import forms
-from openpyxl import load_workbook
-from datetime import datetime, timedelta
 
 @login_required
 def my_team(request):
@@ -91,7 +90,7 @@ def register(request):
 def home(request):
     user = request.user
     teams = Team.objects.filter(owner=user)
-    leagues = League.objects.filter(team__owner=user).distinct()  # Fetch leagues through teams
+    leagues = League.objects.filter(team__owner=user).distinct()  # Ensure correct fetching of leagues
 
     if request.method == 'POST':
         if 'create_team' in request.POST:
@@ -114,18 +113,6 @@ def home(request):
     }
     return render(request, 'home.html', context)
 
-    context = {
-        'login_form': login_form,
-        'register_form': register_form,
-    }
-    if request.user.is_authenticated:
-        user_leagues = request.user.leagues.all()
-        open_leagues = League.objects.exclude(id__in=user_leagues.values_list('id', flat=True))
-        context['user_leagues'] = user_leagues
-        context['open_leagues'] = open_leagues
-
-    return render(request, 'home.html', context)
-
 @login_required
 def create_league(request):
     if not request.user.is_superuser:
@@ -142,10 +129,14 @@ def create_league(request):
 @login_required
 def league_detail(request, league_id):
     league = get_object_or_404(League, id=league_id)
-    teams = league.teams.all()
-    members_teams = {member: member.team_set.filter(leagues=league) for member in league.members.all()}
+    teams = Team.objects.filter(leagues=league)
     
-    bracket = generate_bracket(league.members.all())
+    # Adjust members_teams accordingly. Assuming you want to show teams and their owners.
+    members_teams = {team.owner: team for team in teams}
+    
+    # Assuming generate_bracket takes a list of members (users), we get them from teams.
+    members = [team.owner for team in teams]
+    bracket = generate_bracket(members)
     
     return render(request, 'league_detail.html', {
         'league': league,
@@ -211,3 +202,8 @@ def all_teams(request):
 
     teams = Team.objects.all()
     return render(request, 'all_teams.html', {'teams': teams, 'form': form})
+
+@login_required
+def player_list(request):
+    players = Player.objects.all().order_by('rank')
+    return render(request, 'player_list.html', {'players': players})

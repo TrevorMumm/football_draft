@@ -22,4 +22,5 @@ urlpatterns = [
     path('teams/', league_views.all_teams, name='all_teams'),
     path('my_team/', league_views.my_team, name='my_team'),
     path('assign_players/', league_views.assign_players, name='assign_players'),
+    path('player-list/', league_views.player_list, name='player_list'), 
 ]

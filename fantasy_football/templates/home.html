@@ -28,7 +28,7 @@
                     <input type="text" name="team_name" id="team_name">
                     <label for="league_id">Select League:</label>
                     <select name="league_id" id="league_id">
-                        {% for league in open_leagues %}
+                        {% for league in leagues %}
                         <option value="{{ league.id }}">{{ league.name }}</option>
                         {% endfor %}
                     </select>
@@ -40,8 +40,8 @@
         <div class="right-column">
             <div class="box">
                 <h3>Your Leagues</h3>
-                <ul>
-                    {% for league in user_leagues %}
+                <ul class="no-bullets">
+                    {% for league in leagues %}
                     <li><a href="{% url 'league_detail' league.id %}">{{ league.name }}</a></li>
                     {% endfor %}
                 </ul>
@@ -49,8 +49,8 @@
 
             <div class="box">
                 <h3>Open Leagues</h3>
-                <ul>
-                    {% for league in open_leagues %}
+                <ul class="no-bullets">
+                    {% for league in League.objects.all %}
                     <li><a href="{% url 'league_detail' league.id %}">{{ league.name }}</a></li>
                     {% endfor %}
                 </ul>

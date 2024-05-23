@@ -21,18 +21,13 @@
         </div>
 
         <div class="right-column">
-            <div class="box list-container">
+            <div class="box">
                 <h3>Existing Teams</h3>
-                {% if teams %}
-                <ul>
+                <ul class="no-bullets">
                     {% for team in teams %}
-                    <li>{{ team.owner.username }}: {{ team.name }}
-                    </li>
+                    <li>{{ team.owner.username }}: {{ team.name }}</li>
                     {% endfor %}
                 </ul>
-                {% else %}
-                <p>No teams available.</p>
-                {% endif %}
             </div>
         </div>
     </div>
